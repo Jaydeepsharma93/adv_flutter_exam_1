@@ -36,13 +36,52 @@
 // ]
 // },
 
-
-class Recipes{
-  List recipe = [];
+class Recipes {
+  List<RecipeData>? recipes = [];
+  Recipes({this.recipes});
+  factory Recipes.fromJson(Map json){
+    return Recipes(recipes: (json['recipes'] as List).map((e) => Recipes(e)).toList());
+  }
 }
 
-class RecipeData{
-  int? id,prepTimeMinutes,cookTimeMinutes,servings,caloriesPerServing,userId;
+class RecipeData {
+  int? id,
+      prepTimeMinutes,
+      cookTimeMinutes,
+      servings,
+      caloriesPerServing,
+      userId,
+      reviewCount;
   double? rating;
-  String? name,difficulty,cuisine;
+  String? name, difficulty, cuisine, image;
+
+  RecipeData(
+      {this.id,
+      this.prepTimeMinutes,
+      this.cookTimeMinutes,
+      this.caloriesPerServing,
+      this.servings,
+      this.userId,
+      this.cuisine,
+      this.difficulty,
+      this.image,
+      this.name,
+      this.rating,
+      this.reviewCount});
+
+  factory RecipeData.fromJson(Map json) {
+    return RecipeData(
+        image: json['image'],
+        caloriesPerServing: json['caloriesPerServing'],
+        cookTimeMinutes: json['cookTimeMinutes'],
+        cuisine: json['cuisine'],
+        difficulty: json['difficulty'],
+        id: json['id'],
+        name: json['name'],
+        prepTimeMinutes: json['prepTimeMinutes'],
+        rating: json['rating'],
+        reviewCount: json['reviewCount'],
+        servings: json['servings'],
+        userId: json['userId']);
+  }
 }
