@@ -53,11 +53,11 @@ class DetailScreen extends StatelessWidget {
                     .recipes!.recipe![apiProvider.index].instructions!.length,
               ),
             ),
+            SizedBox(height: 20),
             Text(
               'ingredients :',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
-
             SizedBox(
               height: 200,
               child: ListView.builder(
