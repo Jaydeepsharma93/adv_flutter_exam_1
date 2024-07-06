@@ -37,10 +37,15 @@
 // },
 
 class Recipes {
-  List<RecipeData>? recipes = [];
-  Recipes({this.recipes});
-  factory Recipes.fromJson(Map json){
-    return Recipes(recipes: (json['recipes'] as List).map((e) => Recipes(e)).toList());
+  List<RecipeData>? recipe = [];
+
+  Recipes({this.recipe});
+
+  factory Recipes.fromJson(Map json) {
+    return Recipes(
+        recipe: (json['recipes'] as List)
+            .map((e) => RecipeData.fromJson(e))
+            .toList());
   }
 }
 
@@ -52,8 +57,10 @@ class RecipeData {
       caloriesPerServing,
       userId,
       reviewCount;
-  double? rating;
+  dynamic rating;
   String? name, difficulty, cuisine, image;
+  List? instructions = [];
+  List? ingredients = [];
 
   RecipeData(
       {this.id,
@@ -67,9 +74,11 @@ class RecipeData {
       this.image,
       this.name,
       this.rating,
-      this.reviewCount});
+      this.reviewCount,
+      this.instructions,
+      this.ingredients});
 
-  factory RecipeData.fromJson(Map json) {
+  factory RecipeData.fromJson(Map<String, dynamic> json) {
     return RecipeData(
         image: json['image'],
         caloriesPerServing: json['caloriesPerServing'],
@@ -82,6 +91,16 @@ class RecipeData {
         rating: json['rating'],
         reviewCount: json['reviewCount'],
         servings: json['servings'],
-        userId: json['userId']);
+        userId: json['userId'],
+        instructions: (json['instructions'] as List)
+            .map(
+              (e) => (e),
+            )
+            .toList(),
+        ingredients: (json['ingredients'] as List)
+            .map(
+              (e) => (e),
+            )
+            .toList());
   }
 }

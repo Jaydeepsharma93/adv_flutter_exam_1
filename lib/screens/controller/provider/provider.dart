@@ -1,18 +1,33 @@
-// class ApiServices {
-//   static final ApiServices apiservice = ApiServices._singleton();
-//
-//   ApiServices._singleton();
-//
-//   Future<String?> getData(String query) async {
-//     String finalQuery = query.isNotEmpty ? query : 'Surat';
-//     String apiData =
-//         'https://api.weatherapi.com/v1/forecast.json?key=dbc1ca4c223f47da9e3180308242606&q=$finalQuery';
-//     Uri uri = Uri.parse(apiData);
-//     http.Response response = await http.get(uri);
-//
-//     if (response.statusCode == 200) {
-//       return response.body;
-//     }
-//     return null;
-//   }
-// }
+import 'dart:convert';
+
+import 'package:adv_flutter_exam_1/screens/controller/apiservice.dart';
+import 'package:flutter/material.dart';
+
+import '../../model/modelclass.dart';
+
+class ApiProvider extends ChangeNotifier {
+  Recipes? recipes;
+  bool isLoading = false;
+  int index = 0;
+
+  Future<void> fetchData() async {
+    isLoading = true;
+    notifyListeners();
+
+    String? jsonData = await ApiService.apiService.getData();
+    if (jsonData != null) {
+      Map dataList = jsonDecode(jsonData);
+      recipes = Recipes.fromJson(dataList);
+    }
+
+    isLoading = false;
+    notifyListeners();
+  }
+  void onChangeIndex(index){
+    this.index = index;
+    notifyListeners();
+  }
+  ApiProvider() {
+    fetchData();
+  }
+}
